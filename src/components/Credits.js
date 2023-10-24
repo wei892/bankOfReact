@@ -8,11 +8,6 @@ import {Link} from 'react-router-dom';
 import Debits from './Debits';
 
 const Credits = (props) => {
-  let currentCredit = 0;
-  props.credits.forEach(element => {
-    currentCredit += element.amount;
-  });
-  console.log(currentCredit);
   let CreditsView = () => {
     const { credits } = props;
     return credits.map((credit) => {  // Extract "id", "amount", "description" and "date" properties of each debits JSON array element
@@ -20,14 +15,34 @@ const Credits = (props) => {
       return <li key={credit.id}>{credit.amount} {credit.description} {date}</li>
     });
   }
+
+  function handleOnSubmit(event) {
+    event.preventDefault(); 
+    const description = event.target.description.value;
+    const amount = event.target.amount.value;
+    if (amount > 0 && description) {
+      const newCredit = {
+        id: props.credits.length + 1,
+        description,
+        amount,
+        date: new Date().toISOString(),
+      };
+
+      props.addCredit(newCredit);
+      event.target.reset(); 
+    } else {
+      event.target.reset();
+    }
+  }
   return (
     <div>
       <h1>Credits</h1>
       {CreditsView()}
-      <form onSubmit={props.addDebit}>
-        <input type="text" name="description" />
-        <input type="number" name="amount" />
-        <button type="submit">Add Debit</button>
+      <p>Balance: {props.balance}</p>
+      <form onSubmit={handleOnSubmit}>
+        <input type="text" name="description" alt="description" placeholder='description'/>
+        <input type="number" name="amount" alt="amount" placeholder='amount'/>
+        <button type="submit">Add Credit</button>
       </form>
       <br/>
       <Link to="/">Return to Home</Link>
