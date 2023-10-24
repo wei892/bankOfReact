@@ -12,7 +12,7 @@ const Credits = (props) => {
     const { credits } = props;
     return credits.map((credit) => {  // Extract "id", "amount", "description" and "date" properties of each debits JSON array element
       let date = credit.date.slice(0,10);
-      return <li key={credit.id}>{credit.amount} {credit.description} {date}</li>
+      return <li key={credit.id}> ${credit.amount} {credit.description} {date}</li>
     });
   }
 
@@ -38,7 +38,7 @@ const Credits = (props) => {
     <div>
       <h1>Credits</h1>
       {CreditsView()}
-      <p>Balance: {props.balance}</p>
+      <p>Balance: ${props.balance}</p>
       <form onSubmit={handleOnSubmit}>
         <input type="text" name="description" alt="description" placeholder='description'/>
         <input type="number" name="amount" alt="amount" placeholder='amount'/>

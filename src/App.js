@@ -41,11 +41,17 @@ class App extends Component {
     this.setState((prevState) => ({
       debitList: [...prevState.debitList, newDebit],
     }));
+    this.setState((prevState) => ({
+      accountBalance: Math.round(prevState.accountBalance * 100) / 100 - Math.round(newDebit.amount * 100) / 100,
+    }));
   }
   
   addCredit = (newCredit) => {
     this.setState((prevState) => ({
       creditList: [...prevState.creditList, newCredit],
+    }));
+    this.setState((prevState) => ({
+      accountBalance: Math.round(prevState.accountBalance * 100) /100 + Math.round(newCredit.amount * 100) / 100,
     }));
   }
 
@@ -59,11 +65,7 @@ class App extends Component {
       .then((data) => {
         //console.log(data);
         data.map((credit) => {
-          // this.state.creditList.push(credit);
-          // return 1;
-          this.setState((prevState) => ({
-            creditList: [...prevState.creditList, credit],
-          }));
+          this.addCredit(credit);
         })
       })
       .catch((error) => {
@@ -76,11 +78,7 @@ class App extends Component {
       })
       .then((data) => {
         data.map((debit) => {
-          // this.state.debitList.push(debit);
-          // return 1;
-          this.setState((prevState) => ({
-            debitList: [...prevState.debitList, debit],
-          }));
+          this.addDebit(debit);
         })
       })
       .catch((error) => {

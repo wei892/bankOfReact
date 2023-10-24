@@ -12,7 +12,7 @@ const Debits = (props) => {
     const { debits } = props;
     return debits.map((debit) => {  // Extract "id", "amount", "description" and "date" properties of each debits JSON array element
       let date = debit.date.slice(0,10);
-      return <li key={debit.id}>{debit.amount} {debit.description} {date}</li>
+      return <li key={debit.id}> ${debit.amount} {debit.description} {date}</li>
     });
   }
   // console.log()
@@ -39,7 +39,7 @@ const Debits = (props) => {
     <div>
       <h1>Debits</h1>
       {debitsView()}
-      <p>Balance: {props.balance}</p>
+      <p>Balance: ${props.balance}</p>
       <form onSubmit={handleOnSubmit}>
         <input type="text" name="description" alt="description" placeholder='description'/>
         <input type="number" name="amount" alt="amount" placeholder='amount'/>
