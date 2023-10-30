@@ -19,7 +19,8 @@ const Debits = (props) => {
   function handleOnSubmit(event) {
     event.preventDefault(); 
     const description = event.target.description.value;
-    const amount = event.target.amount.value;
+    let amount = event.target.amount.value;
+    amount = Math.round(amount * 100) / 100;
     if (amount > 0 && description) {
       const newDebit = {
         id: props.debits.length + 1,
@@ -42,7 +43,7 @@ const Debits = (props) => {
       <p>Balance: ${props.balance}</p>
       <form onSubmit={handleOnSubmit}>
         <input type="text" name="description" alt="description" placeholder='description'/>
-        <input type="number" name="amount" alt="amount" placeholder='amount'/>
+        <input type="number" name="amount" alt="amount" placeholder='amount' step="any"/>
         <button type="submit">Add Debit</button>
       </form>
       <br/>
